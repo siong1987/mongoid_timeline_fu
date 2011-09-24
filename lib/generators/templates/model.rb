@@ -1,5 +1,6 @@
 class TimelineEvent
   include Mongoid::Document
+  field :event_type, :type => String
 
   belongs_to :actor,              :polymorphic => true
   belongs_to :subject,            :polymorphic => true
