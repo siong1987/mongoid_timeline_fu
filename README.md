@@ -2,11 +2,12 @@ MongoidTimelineFu
 =================
 
 Easily build timelines, much like GitHub's news feed. But, on Mongoid tho. This
-project is a port of [TimelineFu](https://github.com/jamesgolick/timeline_fu) on Mongoid.
+project is a port of [TimelineFu](https://github.com/jamesgolick/timeline_fu) on [Mongoid](http://mongoid.org/).
 
-== Usage
+Usage
+=====
 
-TimelineFu requires you to have a TimelineEvent model. 
+MongoidTimelineFu requires you to have a TimelineEvent model. 
 The simplest way is to use the generator.
 
     $ rails generate mongoid_timeline_fu
@@ -21,18 +22,16 @@ Next step is to determine what generates an event in your various models.
                        :actor => :author
     end
 
-You can add 'fires' statements to as many models as you want on as many models
+You can add `fires` statements to as many models as you want on as many models
 as you want. 
 
-They are hooked for you after standard ActiveRecord events. In
+They are hooked for you after standard Mongoid events. In
 the previous example, it's an after_create on Posts. 
 
 Parameters for #fires
 =====================
 
-You can supply a few parameters to fires, two of them are mandatory.
-- the first param is a custom name for the event type. It'll be your way of figuring out what events your reading back from the timeline_events table later.
-  - :new_post in the example
+You can supply a few parameters to fires, two of them are mandatory. The first param is a custom name for the event type. It'll be your way of figuring out what events your reading back from the timeline_events table later. `new_post` in the example above.
 
 The rest all fit neatly in an options hash.
 
@@ -42,7 +41,7 @@ The rest all fit neatly in an options hash.
   - In the example, post.author is going to be this person.
 - :subject is automatically set to self, which is good most of the time.  You can however override it if you need to, using :subject.
 - :secondary_subject can let you specify something else that's related to the event. A comment to a blog post would be a good example.
-- :if => symbol or proc/lambda lets you put conditions on when a TimelineEvent is created. It's passed right to the after_xxx ActiveRecord event hook, so it's has the same behavior.
+- :if => symbol or proc/lambda lets you put conditions on when a TimelineEvent is created. It's passed right to the after_xxx Mongoid event hook, so it's has the same behavior.
 
 Here's another example:
 
