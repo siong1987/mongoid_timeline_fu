@@ -39,6 +39,22 @@ class List
                                    :on     => [:create, :update]
 end
 
+class ListWithAdditionalInfo
+  include Mongoid::Document
+  field :title, :type => String
+
+  belongs_to :author, :class_name => "Person"
+  has_many :comments
+  
+  fires :list_created_or_updated,  :actor  => :author, 
+                                   :field1 => :fetch_field1_value,
+                                   :on     => [:create, :update]
+
+  def fetch_field1_value
+    123
+  end
+end
+
 class Comment
   include Mongoid::Document
   field :body, :type => String

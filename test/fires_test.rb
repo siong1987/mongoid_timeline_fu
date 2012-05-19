@@ -2,6 +2,9 @@ require File.dirname(__FILE__)+'/test_helper'
 
 class FiresTest < Test::Unit::TestCase
   def setup
+    @default_timeline_event_fields = ['_type', '_id', 'created_at', 'memo', 'event_type', 'actor_type', 'actor_id', 'subject_type', 'subject_id', 'secondary_subject_type', 'secondary_subject_id']
+    TimelineEvent.stubs(:fields => stub(:keys => @default_timeline_event_fields))
+
     @james = create_person(:email => 'james@giraffesoft.ca')
     @mat   = create_person(:email => 'mat@giraffesoft.ca')
   end
@@ -25,6 +28,14 @@ class FiresTest < Test::Unit::TestCase
                                          :secondary_subject => @list, 
                                          :event_type        => 'comment_created')
     @comment.save
+  end
+
+  def test_should_fire_with_additional_field
+    @list = ListWithAdditionalInfo.new(hash_for_list(:author => @james));
+
+    TimelineEvent.stubs(:fields => stub(:keys => @default_timeline_event_fields + ['field1']))
+    TimelineEvent.expects(:create!).with(:actor => @james, :field1 => @list.fetch_field1_value, :subject => @list, :event_type => 'list_created_or_updated')
+    @list.save
   end
 
   def test_exception_raised_if_on_missing
