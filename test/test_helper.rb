@@ -6,7 +6,7 @@ require 'mocha/setup'
 require File.dirname(__FILE__)+'/../lib/mongoid_timeline_fu'
 
 Mongoid.configure do |config|
-  config.master  = Mongo::Connection.new('127.0.0.1', 27017).db("timeline-fu-test-suite")
+  config.connect_to('timeline-fu-test-suite')
   config.use_utc = true
   config.include_root_in_json = true
 end

@@ -20,6 +20,5 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rake"
   s.add_development_dependency "mocha"
-  s.add_dependency("mongoid")
-  s.add_dependency("bson_ext")
+  s.add_dependency("mongoid", "~> 3")
 end
