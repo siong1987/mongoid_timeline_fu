@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'mongoid'
 require 'test/unit'
-require 'mocha'
+require 'mocha/setup'
 
 require File.dirname(__FILE__)+'/../lib/mongoid_timeline_fu'
 
